@@ -21,13 +21,23 @@ public class PlacesAPIController {
 	}
 	
 	
-	@GetMapping("/find")
+	@GetMapping("/here")
 	public Response getResponse(@RequestParam String lon, @RequestParam String lat) {
 		
 		if (lon != null && lat != null)
-			return this.placesAPIService.GetResponse(lon, lat);
+			return this.placesAPIService.GetHereResponse(lon, lat);
 		else 
-			return this.placesAPIService.GetResponse("39.3097","-76.751718");
+			return this.placesAPIService.GetHereResponse("39.3097","-76.751718");
+				
+	}
+	
+	@GetMapping("/search")
+	public Response getResponse(@RequestParam String lon, @RequestParam String lat, @RequestParam String search) {
+		
+		if (lon != null && lat != null && search != "null")
+			return this.placesAPIService.GetSearchResponse(lon, lat, search);
+		else 
+			return this.placesAPIService.GetSearchResponse("39.3097","-76.751718", "Brandenburg+Gate");
 				
 	}
 	
