@@ -10,7 +10,6 @@ public class RestfulDemoApplication {
 	public static void main(String[] args) {
 		
 		System.out.println("**** Demo API ****");
-		
 		SpringApplication.run(RestfulDemoApplication.class, args);
 		
 	}
