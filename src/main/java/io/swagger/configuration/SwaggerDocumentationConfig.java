@@ -16,8 +16,8 @@ public class SwaggerDocumentationConfig {
 
     ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-            .title("To-Do LogIn API")
-            .description("This is the To-Do LogIn API")
+            .title("To-Do API")
+            .description("This is the To-Do API")
             .license("Apache 2.0")
             .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
             .termsOfServiceUrl("")

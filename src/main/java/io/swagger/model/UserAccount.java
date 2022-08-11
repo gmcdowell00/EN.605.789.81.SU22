@@ -24,7 +24,7 @@ import javax.validation.constraints.*;
 @Document(collection ="user")
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-07-28T21:22:43.336883600-04:00[America/New_York]")
-public class User   {
+public class UserAccount   {
 	
   @Id
   private ObjectId _id;
@@ -35,7 +35,7 @@ public class User   {
 
   @Field
   @JsonProperty("password")
-  private Object password = null;
+  private String password = null;
 
   @Field
   @JsonProperty("firstName")
@@ -62,7 +62,7 @@ public class User   {
   @Valid
   private List<Task> tasks = null;
 
-  public User userId(String userId) {
+  public UserAccount userId(String userId) {
     this.userId = userId;
     return this;
   }
@@ -82,7 +82,7 @@ public class User   {
     this.userId = userId;
   }
 
-  public User password(Object password) {
+  public UserAccount password(String password) {
     this.password = password;
     return this;
   }
@@ -94,15 +94,15 @@ public class User   {
   @ApiModelProperty(example = "password1", required = true, value = "")
   @NotNull
 
-  public Object getPassword() {
+  public String getPassword() {
     return password;
   }
 
-  public void setPassword(Object password) {
+  public void setPassword(String password) {
     this.password = password;
   }
 
-  public User firstName(String firstName) {
+  public UserAccount firstName(String firstName) {
     this.firstName = firstName;
     return this;
   }
@@ -122,7 +122,7 @@ public class User   {
     this.firstName = firstName;
   }
 
-  public User lastName(String lastName) {
+  public UserAccount lastName(String lastName) {
     this.lastName = lastName;
     return this;
   }
@@ -142,7 +142,7 @@ public class User   {
     this.lastName = lastName;
   }
 
-  public User email(String email) {
+  public UserAccount email(String email) {
     this.email = email;
     return this;
   }
@@ -162,7 +162,7 @@ public class User   {
     this.email = email;
   }
 
-  public User dateOfBirth(LocalDate dateOfBirth) {
+  public UserAccount dateOfBirth(LocalDate dateOfBirth) {
     this.dateOfBirth = dateOfBirth;
     return this;
   }
@@ -183,7 +183,7 @@ public class User   {
     this.dateOfBirth = dateOfBirth;
   }
 
-  public User token(Token token) {
+  public UserAccount token(Token token) {
     this.token = token;
     return this;
   }
@@ -203,12 +203,12 @@ public class User   {
     this.token = token;
   }
 
-  public User tasks(List<Task> tasks) {
+  public UserAccount tasks(List<Task> tasks) {
     this.tasks = tasks;
     return this;
   }
 
-  public User addTasksItem(Task tasksItem) {
+  public UserAccount addTasksItem(Task tasksItem) {
     if (this.tasks == null) {
       this.tasks = new ArrayList<Task>();
     }
@@ -243,7 +243,7 @@ public class User   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    User user = (User) o;
+    UserAccount user = (UserAccount) o;
     return Objects.equals(this.userId, user.userId) &&
         Objects.equals(this.password, user.password) &&
         Objects.equals(this.firstName, user.firstName) &&
