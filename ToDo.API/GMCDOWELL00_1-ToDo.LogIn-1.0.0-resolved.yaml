@@ -1,0 +1,137 @@
+---
+openapi: 3.0.0
+info:
+  title: To-Do LogIn API
+  description: This is the To-Do LogIn API
+  contact:
+    name: Yaser Albonni
+    email: yalbonn1@jh.edu
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/GMCDOWELL00_1/ToDo.LogIn/1.0.0
+  description: SwaggerHub API Auto Mocking
+tags:
+- name: login
+  description: login calls
+paths:
+  /login:
+    get:
+      tags:
+      - login
+      summary: Log into application
+      description: |
+        Return authentication token with successful login
+      operationId: login
+      parameters:
+      - name: userId
+        in: query
+        description: UserId parameter
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: password
+        in: query
+        description: Password parameter
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Login results matching criteria
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+        "401":
+          description: Unauthorized
+components:
+  schemas:
+    User:
+      required:
+      - dateOfBirth
+      - email
+      - firstName
+      - lastName
+      - password
+      - userId
+      type: object
+      properties:
+        userId:
+          maxLength: 16
+          minLength: 8
+          type: string
+          example: TestUser20
+        password:
+          maxLength: 16
+          minLength: 8
+          example: password1
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: John
+        email:
+          pattern: '[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}'
+          type: string
+          example: jsmith@gmail.com
+        dateOfBirth:
+          type: string
+          format: date
+          example: 2021-01-30
+        token:
+          $ref: '#/components/schemas/Token'
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Task'
+    Task:
+      type: object
+      properties:
+        name:
+          maxLength: 100
+          minLength: 3
+          type: string
+          example: Task
+        dueDate:
+          type: string
+          format: date
+          example: 2021-01-30
+        category:
+          maxLength: 100
+          minLength: 3
+          type: string
+          example: Category
+        description:
+          maxLength: 2000
+          type: string
+          example: Category
+    Token:
+      type: object
+      properties:
+        token:
+          type: string
+          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE0ODc5NzU0NTgsImlhdCI
+        refreshToken:
+          type: string
+          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE0ODc5NzU0NTgsImlhdCI
+        issueDate:
+          type: string
+          format: date
+          example: 2021-01-30
+        expirationDate:
+          type: string
+          format: date
+          example: 2021-01-30
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
