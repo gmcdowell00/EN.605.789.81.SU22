@@ -1,0 +1,137 @@
+---
+openapi: 3.0.0
+info:
+  title: To-Do Get All Tasks API
+  description: This is a simple API
+  contact:
+    name: Yaser Albonni
+    email: yalbonn1@jh.edu
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/GMCDOWELL00_1/ToDo.GetAllTasks/1.0.0
+  description: SwaggerHub API Auto Mocking
+tags:
+- name: Task
+  description: Operations available to regular developers
+paths:
+  /GetAllTasks:
+    get:
+      tags:
+      - Task
+      summary: searches inventory
+      description: |
+        By passing in the appropriate options, you can search for
+        available inventory in the system
+      operationId: searchInventory
+      parameters:
+      - name: userName
+        in: query
+        description: pass an optional search string for looking up inventory
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+        "400":
+          description: bad input parameter
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    User:
+      required:
+      - dateOfBirth
+      - email
+      - firstName
+      - lastName
+      - password
+      - userId
+      type: object
+      properties:
+        userId:
+          maxLength: 16
+          minLength: 8
+          type: string
+          example: TestUser20
+        password:
+          maxLength: 16
+          minLength: 8
+          example: password1
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: John
+        email:
+          pattern: '[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}'
+          type: string
+          example: jsmith@gmail.com
+        dateOfBirth:
+          type: string
+          format: date
+          example: 2021-01-30
+        token:
+          $ref: '#/components/schemas/Token'
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Task'
+    Task:
+      type: object
+      properties:
+        name:
+          maxLength: 100
+          minLength: 3
+          type: string
+          example: Task
+        dueDate:
+          type: string
+          format: date
+          example: 2021-01-30
+        category:
+          maxLength: 100
+          minLength: 3
+          type: string
+          example: Category
+        description:
+          maxLength: 2000
+          type: string
+          example: Category
+        isCompleted:
+          type: boolean
+          example: false
+    Token:
+      type: object
+      properties:
+        token:
+          type: string
+          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE0ODc5NzU0NTgsImlhdCI
+        refreshToken:
+          type: string
+          example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE0ODc5NzU0NTgsImlhdCI
+        issueDate:
+          type: string
+          format: date
+          example: 2021-01-30
+        expirationDate:
+          type: string
+          format: date
+          example: 2021-01-30
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
