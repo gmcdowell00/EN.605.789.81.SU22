@@ -33,7 +33,7 @@ public class UserService implements IUserService {
 	}
 	
 	public List<Task> findUserTaskByToken(String token) {
-		UserAccount user = this.userRepo.findTaskByToken(token);
+		UserAccount user = this.userRepo.findByUserId(token);
 		return user != null ? user.getTasks() : new ArrayList<Task>();
 	}
 

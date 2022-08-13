@@ -14,8 +14,8 @@ public interface UserRepo extends MongoRepository<UserAccount, String> {
 	@Query("{ 'userId' : ?0, 'password' : ?1 }")
 	UserAccount findByUserIdPass(String userId, String password);
 	
-	@Query("{ 'token.token' : ?0}")
-	UserAccount findTaskByToken(String token);
+	@Query("{ 'userId' : ?0}")
+	UserAccount findTaskByUserId(String userId);
 	
 	@Query("{ 'userId' : ?0 }")
 	UserAccount findByUserId(String userId);

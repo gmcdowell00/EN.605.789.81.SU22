@@ -16,8 +16,11 @@ public interface IUserService {
 	
 	UserAccount findByUserIdPass(String userId, String password);
 	
+	//Optional<UserAccount> FindByToken(String token);
 	Optional<User> FindByToken(String token);
+	
 	void insertUser(UserAccount user);
+	
 	String Login(String username, String password);
 
 }
