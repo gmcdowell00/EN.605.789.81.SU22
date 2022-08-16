@@ -2,11 +2,7 @@ package io.swagger.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.model.Task;
-import io.swagger.model.Token;
 import java.util.ArrayList;
 import java.util.List;
 import org.threeten.bp.LocalDate;
@@ -19,351 +15,360 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * User
+ * Model class for user
+ * 
+ * @authors Glenwood McDowell
+ *
  */
-@Document(collection ="user")
+@Document(collection = "user")
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-07-28T21:22:43.336883600-04:00[America/New_York]")
-public class UserAccount   {
-	
-  @Id
-  private ObjectId _id;
+public class UserAccount {
 
-  @Field
-  @NotBlank(message="Can't be empty")
-  @NotEmpty(message="Can't be empty")
-  @NotNull(message="Can't be null")
-  @JsonProperty("userId")
-  private String userId = null;
+	@Id
+	private ObjectId _id;
 
-  @Field
-  @NotBlank(message="Can't be empty")
-  @NotEmpty(message="Can't be empty")
-  @NotNull(message="Can't be null")
-  @JsonProperty("password")
-  private String password = null;
+	@Field
+	@NotBlank(message = "Can't be empty")
+	@NotEmpty(message = "Can't be empty")
+	@NotNull(message = "Can't be null")
+	@JsonProperty("userId")
+	private String userId = null;
 
-  @Field
-  @NotBlank(message="Can't be empty")
-  @NotEmpty(message="Can't be empty")
-  @NotNull(message="Can't be null")
-  @JsonProperty("firstName")
-  private String firstName = null;
+	@Field
+	@NotBlank(message = "Can't be empty")
+	@NotEmpty(message = "Can't be empty")
+	@NotNull(message = "Can't be null")
+	@JsonProperty("password")
+	private String password = null;
 
-  @Field
-  @NotEmpty(message="Can't be empty")
-  @NotNull(message="Can't be null")
-  @JsonProperty("lastName")
-  private String lastName = null;
+	@Field
+	@NotBlank(message = "Can't be empty")
+	@NotEmpty(message = "Can't be empty")
+	@NotNull(message = "Can't be null")
+	@JsonProperty("firstName")
+	private String firstName = null;
 
-  @Field
-  @NotBlank(message="Can't be empty")
-  @NotEmpty(message="Can't be empty")
-  @NotNull(message="Can't be null")
-  @JsonProperty("email")
-  private String email = null;
+	@Field
+	@NotEmpty(message = "Can't be empty")
+	@NotNull(message = "Can't be null")
+	@JsonProperty("lastName")
+	private String lastName = null;
 
-  @Field
-  @NotBlank(message="Can't be empty")
-  @NotEmpty(message="Can't be empty")
-  @NotNull(message="Can't be null")
-  @JsonProperty("dateOfBirth")
-  private LocalDate dateOfBirth = null;
+	@Field
+	@NotBlank(message = "Can't be empty")
+	@NotEmpty(message = "Can't be empty")
+	@NotNull(message = "Can't be null")
+	@JsonProperty("email")
+	private String email = null;
 
-  @Field
-  @JsonProperty("token")
-  private Token token = null;
+	@Field
+	@NotBlank(message = "Can't be empty")
+	@NotEmpty(message = "Can't be empty")
+	@NotNull(message = "Can't be null")
+	@JsonProperty("dateOfBirth")
+	private LocalDate dateOfBirth = null;
 
-  @Field
-  @JsonProperty("tasks")
-  @Valid
-  private List<Task> tasks = null;
-  
-  @Field
-  @NotBlank(message="Can't be empty")
-  @NotEmpty(message="Can't be empty")
-  @NotNull(message="Can't be null")
-  @JsonProperty("street")
-  @Valid
-  public String street = null;
-  
-  @Field
-  @NotBlank(message="Can't be empty")
-  @NotEmpty(message="Can't be empty")
-  @NotNull(message="Can't be null")
-  @JsonProperty("city")
-  @Valid
-  public String city = null;
-  
-  @Field
-  @NotBlank(message="Can't be empty")
-  @NotEmpty(message="Can't be empty")
-  @NotNull(message="Can't be null")
-  @JsonProperty("state")
-  @Valid
-  public String state = null;
-  
-  @Field
-  @NotBlank(message="Can't be empty")
-  @NotEmpty(message="Can't be empty")
-  @NotNull(message="Can't be null")
-  @JsonProperty("zipCode")
-  @Valid
-  public String zipCode = null;
+	@Field
+	@JsonProperty("token")
+	private Token token = null;
 
-  public UserAccount userId(String userId) {
-    this.userId = userId;
-    return this;
-  }
-  
-  /**
-   * Get userId
-   * @return userId
-  **/
-  @ApiModelProperty(example = "TestUser20", required = true, value = "")
-  @NotNull
+	@Field
+	@JsonProperty("tasks")
+	@Valid
+	private List<Task> tasks = null;
 
-@Size(min=8,max=16)   public String getUserId() {
-    return userId;
-  }
+	@Field
+	@NotBlank(message = "Can't be empty")
+	@NotEmpty(message = "Can't be empty")
+	@NotNull(message = "Can't be null")
+	@JsonProperty("street")
+	@Valid
+	public String street = null;
 
-  public void setUserId(String userId) {
-    this.userId = userId;
-  }
+	@Field
+	@NotBlank(message = "Can't be empty")
+	@NotEmpty(message = "Can't be empty")
+	@NotNull(message = "Can't be null")
+	@JsonProperty("city")
+	@Valid
+	public String city = null;
 
-  public UserAccount password(String password) {
-    this.password = password;
-    return this;
-  }
+	@Field
+	@NotBlank(message = "Can't be empty")
+	@NotEmpty(message = "Can't be empty")
+	@NotNull(message = "Can't be null")
+	@JsonProperty("state")
+	@Valid
+	public String state = null;
 
-  /**
-   * Get password
-   * @return password
-  **/
-  @ApiModelProperty(example = "password1", required = true, value = "")
-  @NotNull
+	@Field
+	@NotBlank(message = "Can't be empty")
+	@NotEmpty(message = "Can't be empty")
+	@NotNull(message = "Can't be null")
+	@JsonProperty("zipCode")
+	@Valid
+	public String zipCode = null;
 
-  public String getPassword() {
-    return password;
-  }
+	public UserAccount userId(String userId) {
+		this.userId = userId;
+		return this;
+	}
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
+	/**
+	 * Get userId
+	 * 
+	 * @return userId
+	 **/
+	@ApiModelProperty(example = "TestUser20", required = true, value = "")
+	@NotNull
 
-  public UserAccount firstName(String firstName) {
-    this.firstName = firstName;
-    return this;
-  }
+	@Size(min = 8, max = 16)
+	public String getUserId() {
+		return userId;
+	}
 
-  /**
-   * Get firstName
-   * @return firstName
-  **/
-  @ApiModelProperty(example = "John", required = true, value = "")
-  @NotNull
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
-  public String getFirstName() {
-    return firstName;
-  }
+	public UserAccount password(String password) {
+		this.password = password;
+		return this;
+	}
 
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
+	/**
+	 * Get password
+	 * 
+	 * @return password
+	 **/
+	@ApiModelProperty(example = "password1", required = true, value = "")
+	@NotNull
 
-  public UserAccount lastName(String lastName) {
-    this.lastName = lastName;
-    return this;
-  }
+	public String getPassword() {
+		return password;
+	}
 
-  /**
-   * Get lastName
-   * @return lastName
-  **/
-  @ApiModelProperty(example = "John", required = true, value = "")
-  @NotNull
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-  public String getLastName() {
-    return lastName;
-  }
+	public UserAccount firstName(String firstName) {
+		this.firstName = firstName;
+		return this;
+	}
 
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
+	/**
+	 * Get firstName
+	 * 
+	 * @return firstName
+	 **/
+	@ApiModelProperty(example = "John", required = true, value = "")
+	@NotNull
 
-  public UserAccount email(String email) {
-    this.email = email;
-    return this;
-  }
+	public String getFirstName() {
+		return firstName;
+	}
 
-  /**
-   * Get email
-   * @return email
-  **/
-  @ApiModelProperty(example = "jsmith@gmail.com", required = true, value = "")
-  @NotNull
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-@Pattern(regexp="[a-z0-9._%+-]+@[a-z0-9.-]+\\\\.[a-z]{2,3}")   public String getEmail() {
-    return email;
-  }
+	public UserAccount lastName(String lastName) {
+		this.lastName = lastName;
+		return this;
+	}
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
+	/**
+	 * Get lastName
+	 * 
+	 * @return lastName
+	 **/
+	@ApiModelProperty(example = "John", required = true, value = "")
+	@NotNull
 
-  public UserAccount dateOfBirth(LocalDate dateOfBirth) {
-    this.dateOfBirth = dateOfBirth;
-    return this;
-  }
+	public String getLastName() {
+		return lastName;
+	}
 
-  /**
-   * Get dateOfBirth
-   * @return dateOfBirth
-  **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-  @Valid
-  public LocalDate getDateOfBirth() {
-    return dateOfBirth;
-  }
+	public UserAccount email(String email) {
+		this.email = email;
+		return this;
+	}
 
-  public void setDateOfBirth(LocalDate dateOfBirth) {
-    this.dateOfBirth = dateOfBirth;
-  }
+	/**
+	 * Get email
+	 * 
+	 * @return email
+	 **/
+	@ApiModelProperty(example = "jsmith@gmail.com", required = true, value = "")
+	@NotNull
 
-  public UserAccount token(Token token) {
-    this.token = token;
-    return this;
-  }
+	@Pattern(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\\\.[a-z]{2,3}")
+	public String getEmail() {
+		return email;
+	}
 
-  /**
-   * Get token
-   * @return token
-  **/
-  @ApiModelProperty(value = "")
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-  @Valid
-  public Token getToken() {
-    return token;
-  }
+	public UserAccount dateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+		return this;
+	}
 
-  public void setToken(Token token) {
-    this.token = token;
-  }
+	/**
+	 * Get dateOfBirth
+	 * 
+	 * @return dateOfBirth
+	 **/
+	@ApiModelProperty(required = true, value = "")
+	@NotNull
 
-  public UserAccount tasks(List<Task> tasks) {
-    this.tasks = tasks;
-    return this;
-  }
+	@Valid
+	public LocalDate getDateOfBirth() {
+		return dateOfBirth;
+	}
 
-  public UserAccount addTasksItem(Task tasksItem) {
-    if (this.tasks == null) {
-      this.tasks = new ArrayList<Task>();
-    }
-    this.tasks.add(tasksItem);
-    return this;
-  }
-  
-  public ObjectId getObjectId() {
-	  return this._id;
-  }
+	public void setDateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
 
-  /**
-   * Get tasks
-   * @return tasks
-  **/
-  @ApiModelProperty(value = "")
-  @Valid
-  public List<Task> getTasks() {
-    return tasks;
-  }
+	public UserAccount token(Token token) {
+		this.token = token;
+		return this;
+	}
 
-  public void setTasks(List<Task> tasks) {
-    this.tasks = tasks;
-  }
-  
-  public String getStreet() {
-	return street;
-}
+	/**
+	 * Get token
+	 * 
+	 * @return token
+	 **/
+	@ApiModelProperty(value = "")
 
-public void setStreet(String street) {
-	this.street = street;
-}
+	@Valid
+	public Token getToken() {
+		return token;
+	}
 
-public String getCity() {
-	return city;
-}
+	public void setToken(Token token) {
+		this.token = token;
+	}
 
-public void setCity(String city) {
-	this.city = city;
-}
+	public UserAccount tasks(List<Task> tasks) {
+		this.tasks = tasks;
+		return this;
+	}
 
-public String getState() {
-	return state;
-}
+	public UserAccount addTasksItem(Task tasksItem) {
+		if (this.tasks == null) {
+			this.tasks = new ArrayList<Task>();
+		}
+		this.tasks.add(tasksItem);
+		return this;
+	}
 
-public void setState(String state) {
-	this.state = state;
-}
+	public ObjectId getObjectId() {
+		return this._id;
+	}
 
-public String getZipCode() {
-	return zipCode;
-}
+	/**
+	 * Get tasks
+	 * 
+	 * @return tasks
+	 **/
+	@ApiModelProperty(value = "")
+	@Valid
+	public List<Task> getTasks() {
+		return tasks;
+	}
 
-public void setZipCode(String zipCode) {
-	this.zipCode = zipCode;
-}
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
+	}
 
-@Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    UserAccount user = (UserAccount) o;
-    return Objects.equals(this.userId, user.userId) &&
-        Objects.equals(this.password, user.password) &&
-        Objects.equals(this.firstName, user.firstName) &&
-        Objects.equals(this.lastName, user.lastName) &&
-        Objects.equals(this.email, user.email) &&
-        Objects.equals(this.dateOfBirth, user.dateOfBirth) &&
-        Objects.equals(this.token, user.token) &&
-        Objects.equals(this.tasks, user.tasks);
-  }
+	public String getStreet() {
+		return street;
+	}
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(userId, password, firstName, lastName, email, dateOfBirth, token, tasks);
-  }
+	public void setStreet(String street) {
+		this.street = street;
+	}
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class User {\n");
-    
-    sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
-    sb.append("    password: ").append(toIndentedString(password)).append("\n");
-    sb.append("    firstName: ").append(toIndentedString(firstName)).append("\n");
-    sb.append("    lastName: ").append(toIndentedString(lastName)).append("\n");
-    sb.append("    email: ").append(toIndentedString(email)).append("\n");
-    sb.append("    dateOfBirth: ").append(toIndentedString(dateOfBirth)).append("\n");
-    sb.append("    token: ").append(toIndentedString(token)).append("\n");
-    sb.append("    tasks: ").append(toIndentedString(tasks)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
+	public String getCity() {
+		return city;
+	}
 
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getZipCode() {
+		return zipCode;
+	}
+
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
+
+	@Override
+	public boolean equals(java.lang.Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		UserAccount user = (UserAccount) o;
+		return Objects.equals(this.userId, user.userId) && Objects.equals(this.password, user.password)
+				&& Objects.equals(this.firstName, user.firstName) && Objects.equals(this.lastName, user.lastName)
+				&& Objects.equals(this.email, user.email) && Objects.equals(this.dateOfBirth, user.dateOfBirth)
+				&& Objects.equals(this.token, user.token) && Objects.equals(this.tasks, user.tasks);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(userId, password, firstName, lastName, email, dateOfBirth, token, tasks);
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("class User {\n");
+
+		sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
+		sb.append("    password: ").append(toIndentedString(password)).append("\n");
+		sb.append("    firstName: ").append(toIndentedString(firstName)).append("\n");
+		sb.append("    lastName: ").append(toIndentedString(lastName)).append("\n");
+		sb.append("    email: ").append(toIndentedString(email)).append("\n");
+		sb.append("    dateOfBirth: ").append(toIndentedString(dateOfBirth)).append("\n");
+		sb.append("    token: ").append(toIndentedString(token)).append("\n");
+		sb.append("    tasks: ").append(toIndentedString(tasks)).append("\n");
+		sb.append("}");
+		return sb.toString();
+	}
+
+	/**
+	 * Convert the given object to string with each line indented by 4 spaces
+	 * (except the first line).
+	 */
+	private String toIndentedString(java.lang.Object o) {
+		if (o == null) {
+			return "null";
+		}
+		return o.toString().replace("\n", "\n    ");
+	}
 }

@@ -57,7 +57,7 @@ public class UserService implements IUserService {
 	public void insertUser(UserAccount user) {
 		this.userRepo.insert(user);
 	}
-	
+
 	@Override
 	public UserAccount Save(UserAccount user) {
 		return this.userRepo.save(user);

@@ -7,52 +7,47 @@ package io.swagger.api;
 
 import io.swagger.model.Movie;
 import io.swagger.model.Task;
-import io.swagger.model.Token;
 import io.swagger.model.UserAccount;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
-import java.util.Map;
 
+/**
+ * API interface
+ * 
+ * @authors Glenwood McDowell & Yaser Albonni
+ *
+ */
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-07-31T18:12:46.646471100-04:00[America/New_York]")
 @Api(value = "ToDo", description = "the ToDo API")
 public interface ToDoApi {
 
-	@ApiOperation(value = "Log into application", nickname = "login", notes = "Return authentication token with successful login ",  tags = {
+	@ApiOperation(value = "Log into application", nickname = "login", notes = "Return authentication token with successful login ", tags = {
 			"login", })
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "Login results matching criteria"),
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Login results matching criteria"),
 			@ApiResponse(code = 401, message = "Unauthorized") })
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	ResponseEntity<String> login(
 			@NotNull @ApiParam(value = "UserId parameter", required = true) @Valid @RequestParam(value = "userId", required = true) String userId,
 			@NotNull @ApiParam(value = "Password parameter", required = true) @Valid @RequestParam(value = "password", required = true) String password);
-	
-	  @ApiOperation(value = "Adds a new user to the system", nickname = "createUser", notes = "Adds a new user to the system", tags={ "signup", })
-	    @ApiResponses(value = { 
-	        @ApiResponse(code = 201, message = "Newly created user ID"),
-	        @ApiResponse(code = 400, message = "Invalid input, Object invalid"),
-	        @ApiResponse(code = 409, message = "An existing item already exists") })
-	    @RequestMapping(value = "/signup",
-	        consumes = { "application/json" },
-	        //produces = { "application/json" },
-	        method = RequestMethod.POST)
-	    ResponseEntity<String> createUser(@ApiParam(value = "Inventory item to add"  )  @Valid @RequestBody UserAccount body, BindingResult bindingResult);
-	
+
+	@ApiOperation(value = "Adds a new user to the system", nickname = "createUser", notes = "Adds a new user to the system", tags = {
+			"signup", })
+	@ApiResponses(value = { @ApiResponse(code = 201, message = "Newly created user ID"),
+			@ApiResponse(code = 400, message = "Invalid input, Object invalid"),
+			@ApiResponse(code = 409, message = "An existing item already exists") })
+	@RequestMapping(value = "/signup", consumes = { "application/json" },
+			// produces = { "application/json" },
+			method = RequestMethod.POST)
+	ResponseEntity<String> createUser(@ApiParam(value = "Inventory item to add") @Valid @RequestBody UserAccount body,
+			BindingResult bindingResult);
 
 	@ApiOperation(value = "Adds an task item", nickname = "addTask", notes = "Adds a task item to the system", authorizations = {
 			@Authorization(value = "bearerAuth") }, tags = { "Task", })
@@ -60,8 +55,11 @@ public interface ToDoApi {
 			@ApiResponse(code = 400, message = "Invalid input, object invalid"),
 			@ApiResponse(code = 409, message = "An existing item already exists") })
 	@RequestMapping(value = "/createTask", consumes = { "application/json" }, method = RequestMethod.POST)
-	//ResponseEntity<String> addTask(@RequestHeader("Authorization") String authorization,@ApiParam(value = "Inventory item to add") @Valid @RequestBody Task body);
-	ResponseEntity<String> addTask(@ApiParam(value = "Inventory item to add") @Valid @RequestBody Task body, BindingResult bindingResult);
+	// ResponseEntity<String> addTask(@RequestHeader("Authorization") String
+	// authorization,@ApiParam(value = "Inventory item to add") @Valid @RequestBody
+	// Task body);
+	ResponseEntity<String> addTask(@ApiParam(value = "Inventory item to add") @Valid @RequestBody Task body,
+			BindingResult bindingResult);
 
 	@ApiOperation(value = "Delete tasks by Task Id", nickname = "deleteTask", notes = "Delete task by given Task name ", tags = {
 			"deleteTask", })
@@ -70,34 +68,39 @@ public interface ToDoApi {
 			@ApiResponse(code = 409, message = "An existing item already exists") })
 	@RequestMapping(value = "/deleteTask", method = RequestMethod.DELETE)
 	/*
-	ResponseEntity<String> deleteTask(@RequestHeader("Authorization") String authorization,
-			@NotNull @ApiParam(value = "Pass a task name for deletion", required = true) @Valid @RequestParam(value = "taskName", required = true) String taskName);*/
+	 * ResponseEntity<String> deleteTask(@RequestHeader("Authorization") String
+	 * authorization,
+	 * 
+	 * @NotNull @ApiParam(value = "Pass a task name for deletion", required =
+	 * true) @Valid @RequestParam(value = "taskName", required = true) String
+	 * taskName);
+	 */
 	ResponseEntity<String> deleteTask(
 			@NotNull @ApiParam(value = "Pass a task name for deletion", required = true) @Valid @RequestParam(value = "taskName", required = true) String taskName);
-	
+
 	@ApiOperation(value = "searches inventory", nickname = "searchInventory", notes = "By passing in the appropriate options, you can search for available inventory in the system ", response = Task.class, responseContainer = "List", authorizations = {
-	        @Authorization(value = "bearerAuth")    }, tags={ "Task", })
-	    @ApiResponses(value = { 
-	        @ApiResponse(code = 200, message = "search results matching criteria", response = Task.class, responseContainer = "List"),
-	        @ApiResponse(code = 400, message = "bad input parameter") })
-	    @RequestMapping(value = "/getTasks",
-	        produces = { "application/json" }, 
-	        method = RequestMethod.GET)
-	    //ResponseEntity<List<Task>> getTasks(@NotNull @ApiParam(value = "pass an optional search string for looking up inventory", required = true) @Valid @RequestParam(value = "userName", required = true) String userName);
+			@Authorization(value = "bearerAuth") }, tags = { "Task", })
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "search results matching criteria", response = Task.class, responseContainer = "List"),
+			@ApiResponse(code = 400, message = "bad input parameter") })
+	@RequestMapping(value = "/getTasks", produces = { "application/json" }, method = RequestMethod.GET)
+	// ResponseEntity<List<Task>> getTasks(@NotNull @ApiParam(value = "pass an
+	// optional search string for looking up inventory", required = true) @Valid
+	// @RequestParam(value = "userName", required = true) String userName);
 	ResponseEntity<List<Task>> getTasks();
-	
+
 	@ApiOperation(value = "Updates a task item", nickname = "updateTask", notes = "Updates a task item to the system", authorizations = {
-	        @Authorization(value = "bearerAuth")    }, tags={ "Task", })
-	    @ApiResponses(value = { 
-	        @ApiResponse(code = 200, message = "Updated task with task name"),
-	        @ApiResponse(code = 400, message = "Invalid input, object invalid"),
-	        @ApiResponse(code = 409, message = "An existing item already exists") })
-	    @RequestMapping(value = "/updateTask",
-	        consumes = { "application/json" },
-	        method = RequestMethod.PUT)
-	//ResponseEntity<String> updateTask(@RequestHeader("Authorization") String authorization,@ApiParam(value = "Inventory item to add"  )  @Valid @RequestBody Task body);
-	ResponseEntity<String> updateTask(@ApiParam(value = "Inventory item to add"  )  @Valid @RequestBody Task body, BindingResult bindingResult);
-	
+			@Authorization(value = "bearerAuth") }, tags = { "Task", })
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Updated task with task name"),
+			@ApiResponse(code = 400, message = "Invalid input, object invalid"),
+			@ApiResponse(code = 409, message = "An existing item already exists") })
+	@RequestMapping(value = "/updateTask", consumes = { "application/json" }, method = RequestMethod.PUT)
+	// ResponseEntity<String> updateTask(@RequestHeader("Authorization") String
+	// authorization,@ApiParam(value = "Inventory item to add" ) @Valid @RequestBody
+	// Task body);
+	ResponseEntity<String> updateTask(@ApiParam(value = "Inventory item to add") @Valid @RequestBody Task body,
+			BindingResult bindingResult);
+
 	@ApiOperation(value = "Mark task as completed", nickname = "toggleCompeted", notes = "Mark task as completed by given Task name ", tags = {
 			"toggleCompeted", })
 	@ApiResponses(value = { @ApiResponse(code = 201, message = "Task updated"),
@@ -105,25 +108,31 @@ public interface ToDoApi {
 			@ApiResponse(code = 409, message = "An existing item already exists") })
 	@RequestMapping(value = "/toggleCompeted", method = RequestMethod.PUT)
 	/*
-	ResponseEntity<String> markTaskComplete(@RequestHeader("Authorization") String authorization,
-			@NotNull @ApiParam(value = "Pass a task name for update", required = true) @Valid @RequestParam(value = "taskName", required = true) String taskName);*/
+	 * ResponseEntity<String> markTaskComplete(@RequestHeader("Authorization")
+	 * String authorization,
+	 * 
+	 * @NotNull @ApiParam(value = "Pass a task name for update", required =
+	 * true) @Valid @RequestParam(value = "taskName", required = true) String
+	 * taskName);
+	 */
 	ResponseEntity<String> markTaskComplete(
 			@NotNull @ApiParam(value = "Pass a task name for update", required = true) @Valid @RequestParam(value = "taskName", required = true) String taskName);
-	
+
 	@ApiOperation(value = "searches inventory", nickname = "searchInventory", notes = "Retrieve movie (maybe external service) ", response = String.class, authorizations = {
-	        @Authorization(value = "bearerAuth")    }, tags={ "developers", })
-	    @ApiResponses(value = { 
-	        @ApiResponse(code = 200, message = "search results matching criteria", response = String.class),
-	        @ApiResponse(code = 400, message = "bad input parameter") })
-	    @RequestMapping(value = "/suggestMovie",
-	        produces = { "application/json" }, 
-	        method = RequestMethod.GET)
-	/*ResponseEntity<Movie> suggestMovie(@RequestHeader("Authorization") String authorization);*/
-	ResponseEntity<Movie> suggestMovie();
-	
+			@Authorization(value = "bearerAuth") }, tags = { "developers", })
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "search results matching criteria", response = String.class),
+			@ApiResponse(code = 400, message = "bad input parameter") })
+	@RequestMapping(value = "/suggestMovie", produces = { "application/json" }, method = RequestMethod.GET)
 	/*
-	 @PostMapping("/login")
-	 String getToken(@RequestParam("userId") final String userId, @RequestParam("password") final String password);
+	 * ResponseEntity<Movie> suggestMovie(@RequestHeader("Authorization") String
+	 * authorization);
+	 */
+	ResponseEntity<Movie> suggestMovie();
+
+	/*
+	 * @PostMapping("/login") String getToken(@RequestParam("userId") final String
+	 * userId, @RequestParam("password") final String password);
 	 */
 
 }

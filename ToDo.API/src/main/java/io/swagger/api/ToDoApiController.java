@@ -2,7 +2,6 @@ package io.swagger.api;
 
 import io.swagger.model.Movie;
 import io.swagger.model.Task;
-import io.swagger.model.Token;
 import io.swagger.model.UserAccount;
 import io.swagger.security.SecurityUtil;
 import io.swagger.service.UserService;
@@ -14,30 +13,26 @@ import io.swagger.annotations.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
-
+/**
+ * API controller
+ * 
+ * @authors Glenwood McDowell & Yaser Albonni
+ *
+ */
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-07-31T18:12:46.646471100-04:00[America/New_York]")
 @Controller(value = "/api")
 @RequestMapping(path = "/api/v1/")
@@ -48,19 +43,20 @@ public class ToDoApiController implements ToDoApi {
 	private final ObjectMapper objectMapper;
 
 	private final HttpServletRequest request;
-	
+
 	private final SecurityUtil securityUtil;
-	
+
 	private final HelperUtil helperUtil;
-	
-    @Value("${authorization}")
+
+	@Value("${authorization}")
 	private String authorization;
 
 	@Qualifier(value = "userService")
 	private final UserService userService;
-	
+
 	@org.springframework.beans.factory.annotation.Autowired
-	public ToDoApiController(ObjectMapper objectMapper, HttpServletRequest request, UserService userService, SecurityUtil securityUtil, HelperUtil helperUtil) {
+	public ToDoApiController(ObjectMapper objectMapper, HttpServletRequest request, UserService userService,
+			SecurityUtil securityUtil, HelperUtil helperUtil) {
 		this.objectMapper = objectMapper;
 		this.request = request;
 		this.userService = userService;
@@ -70,47 +66,49 @@ public class ToDoApiController implements ToDoApi {
 
 	/**
 	 * (Sign-up) Create user if one does not exist
+	 * 
 	 * @param body
 	 * @return
 	 */
 	public ResponseEntity<String> createUser(
-			@ApiParam(value = "Inventory item to add") @Valid @RequestBody UserAccount body, BindingResult bindingResult) {
-		
+			@ApiParam(value = "Inventory item to add") @Valid @RequestBody UserAccount body,
+			BindingResult bindingResult) {
+
 		// Print
 		System.out.println("Request to create User");
-		
+
 		// UserAccount parameter has errors
 		if (bindingResult.hasErrors()) {
-			
+
 			// Write to console and return error message
 			System.out.println("invalid UserAccount parameter");
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(this.helperUtil.ErrorBuilder(bindingResult.getAllErrors()));
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body(this.helperUtil.ErrorBuilder(bindingResult.getAllErrors()));
 		}
-		
+
 		// Print
 		System.out.println("Checking for duplicate user");
-		
+
 		// Find user by userId
 		UserAccount temp = this.userService.findByUserId(body.getUserId());
-		
+
 		// If temp is not null
 		if (temp != null) {
-			
+
 			// Print and return bad request
 			System.out.println("Canceling insert. Duplicate user exist");
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Duplicate User");	
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Duplicate User");
 		}
-			
+
 		// Print
 		System.out.println("User doesn't exist. Creating new account");
-		
+
 		// Find inserted student and retrieve entity
 		UserAccount user = this.userService.Save(body);
-		
 
-		// If user was successfully saved return status code 
+		// If user was successfully saved return status code
 		if (user.getObjectId() != null) {
-			
+
 			// Print
 			System.out.println("New account created. Returning userId");
 			return ResponseEntity.status(HttpStatus.CREATED).body(user.getUserId());
@@ -120,9 +118,10 @@ public class ToDoApiController implements ToDoApi {
 		System.out.println("New account could not be created");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 	}
-	
+
 	/**
-	 * Retrieve user token if credentials are valid. 
+	 * Retrieve user token if credentials are valid.
+	 * 
 	 * @param userId
 	 * @param passowrd
 	 * @return
@@ -132,52 +131,56 @@ public class ToDoApiController implements ToDoApi {
 			@NotNull @ApiParam(value = "Password parameter", required = true) @Valid @RequestParam(value = "password", required = true) String password) {
 
 		// If userId or password is null or empty
-		if (userId == null || userId == "" || password == null || password == "" ) {
+		if (userId == null || userId == "" || password == null || password == "") {
 
 			// Print line
 			System.out.println("Invalid UserAccount parameter");
-			
+
 			// Instantiate string builder
 			StringBuilder sb = new StringBuilder();
 			sb.append("Error:" + System.lineSeparator());
-			
+
 			// If userId null append it
 			if (userId == null || userId == "")
 				sb.append("UserId cannot be null or empty" + System.lineSeparator());
-			
+
 			// If password is null append it
 			if (password == null || password == "")
 				sb.append("Password cannot be null or empty" + System.lineSeparator());
-						
+
 			// Return response
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(sb.toString());
 		}
 
 		// Retrieve token for user with specified credentials
 		String token = userService.Login(userId, password);
-		
+
 		// If the token is empty return bad request
-		if (StringUtils.isEmpty(token)) 
+		if (StringUtils.isEmpty(token))
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error - Token not found");
-		
+
 		// Return Status code 200 and user token
 		return ResponseEntity.ok(token);
 	}
 
-	
 	/**
-	 * Add task to user. 
+	 * Add task to user.
+	 * 
 	 * @param task
 	 * @return
 	 */
-	/*public ResponseEntity<String> addTask(@RequestHeader("Authorization") String authorization,
-			@ApiParam(value = "Inventory item to add") @Valid @RequestBody Task task) {*/
-	public ResponseEntity<String> addTask(
-			@ApiParam(value = "Inventory item to add") @Valid @RequestBody Task task, BindingResult bindingResult) {
+	/*
+	 * public ResponseEntity<String> addTask(@RequestHeader("Authorization") String
+	 * authorization,
+	 * 
+	 * @ApiParam(value = "Inventory item to add") @Valid @RequestBody Task task) {
+	 */
+	public ResponseEntity<String> addTask(@ApiParam(value = "Inventory item to add") @Valid @RequestBody Task task,
+			BindingResult bindingResult) {
 
 		// Print
 		System.out.println("Request to addTask");
-		
+
 		// Task parameter has errors
 		if (bindingResult.hasErrors()) {
 
@@ -186,13 +189,13 @@ public class ToDoApiController implements ToDoApi {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 					.body(this.helperUtil.ErrorBuilder(bindingResult.getAllErrors()));
 		}
-		
+
 		// TODO create utility to extract token from header
 		// authorization.substring(7);
 		// Print
 		System.out.println("Verify user");
 		String token = this.securityUtil.ExtractTokenFromHeader(request.getHeader(authorization));
-		
+
 		// If token isn't valid
 		if (token == null || token.equals("")) {
 			// Print
@@ -203,7 +206,7 @@ public class ToDoApiController implements ToDoApi {
 		// Print
 		System.out.println("Valid user");
 		System.out.println("Validate task");
-		
+
 		// Validate required parameters
 		if (task.getName() == null) {
 			return new ResponseEntity<String>("Error - Name parameter is required.", HttpStatus.BAD_REQUEST);
@@ -238,31 +241,35 @@ public class ToDoApiController implements ToDoApi {
 		System.out.println("Creating task.");
 		String result = userService.createTask(token, task);
 
-		// Task created return create 
+		// Task created return create
 		return new ResponseEntity<String>(result, HttpStatus.CREATED);
 	}
 
-
 	/**
 	 * Delete a task from a user
+	 * 
 	 * @param taskName
 	 * @return
 	 */
 	/*
-	 public ResponseEntity<String> deleteTask(@RequestHeader("Authorization") String authorization,
-			@NotNull @ApiParam(value = "Pass a task name for deletion", required = true) @Valid @RequestParam(value = "taskName", required = true) String taskName) {
+	 * public ResponseEntity<String> deleteTask(@RequestHeader("Authorization")
+	 * String authorization,
+	 * 
+	 * @NotNull @ApiParam(value = "Pass a task name for deletion", required =
+	 * true) @Valid @RequestParam(value = "taskName", required = true) String
+	 * taskName) {
 	 */
 	public ResponseEntity<String> deleteTask(
 			@NotNull @ApiParam(value = "Pass a task name for deletion", required = true) @Valid @RequestParam(value = "taskName", required = true) String taskName) {
 
 		// TODO create utility to extract token from header
-		//String token = authorization.substring(7);
-		//String token = this.securityUtil.ExtractTokenFromHeader(request.getHeader(authorization));
-		
+		// String token = authorization.substring(7);
+		// String token =
+		// this.securityUtil.ExtractTokenFromHeader(request.getHeader(authorization));
+
 		// Print
 		System.out.println("Request to deleteTask");
-		
-		
+
 		// TODO create utility to extract token from header
 		// authorization.substring(7);
 		// Print
@@ -278,12 +285,12 @@ public class ToDoApiController implements ToDoApi {
 
 		// Print
 		System.out.println("Valid user");
-		
+
 		// Validate required parameters
 		if (taskName == null) {
 			return new ResponseEntity<String>("Error - taskName parameter is required.", HttpStatus.BAD_REQUEST);
 		}
-		
+
 		// Delete task
 		String result = userService.deleteTask(token, taskName);
 
@@ -292,6 +299,7 @@ public class ToDoApiController implements ToDoApi {
 
 	/**
 	 * Retrieve all tasks for user
+	 * 
 	 * @param userName
 	 * @return
 	 */
@@ -314,14 +322,17 @@ public class ToDoApiController implements ToDoApi {
 		return ResponseEntity.ok(task);
 	}
 
- /*
-	public ResponseEntity<String> updateTask(@RequestHeader("Authorization") String authorization,
-			@ApiParam(value = "Inventory item to add") @Valid @RequestBody Task task) {*/
-	public ResponseEntity<String> updateTask(
-			@ApiParam(value = "Inventory item to add") @Valid @RequestBody Task task, BindingResult bindingResult) {
-			
+	/*
+	 * public ResponseEntity<String> updateTask(@RequestHeader("Authorization")
+	 * String authorization,
+	 * 
+	 * @ApiParam(value = "Inventory item to add") @Valid @RequestBody Task task) {
+	 */
+	public ResponseEntity<String> updateTask(@ApiParam(value = "Inventory item to add") @Valid @RequestBody Task task,
+			BindingResult bindingResult) {
+
 		System.out.println("Request to updateTask");
-		
+
 		// Task parameter has errors
 		if (bindingResult.hasErrors()) {
 
@@ -330,7 +341,7 @@ public class ToDoApiController implements ToDoApi {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 					.body(this.helperUtil.ErrorBuilder(bindingResult.getAllErrors()));
 		}
-		
+
 		// Print
 		System.out.println("Verify user");
 		String token = this.securityUtil.ExtractTokenFromHeader(request.getHeader(authorization));
@@ -367,7 +378,6 @@ public class ToDoApiController implements ToDoApi {
 					HttpStatus.BAD_REQUEST);
 		}
 
-
 		// Update task
 		String result = userService.updateTask(token, task);
 
@@ -375,8 +385,13 @@ public class ToDoApiController implements ToDoApi {
 	}
 
 	/*
-	public ResponseEntity<String> markTaskComplete(@RequestHeader("Authorization") String authorization,
-			@NotNull @ApiParam(value = "Pass a task name for update", required = true) @Valid @RequestParam(value = "taskName", required = true) String taskName) {*/
+	 * public ResponseEntity<String>
+	 * markTaskComplete(@RequestHeader("Authorization") String authorization,
+	 * 
+	 * @NotNull @ApiParam(value = "Pass a task name for update", required =
+	 * true) @Valid @RequestParam(value = "taskName", required = true) String
+	 * taskName) {
+	 */
 	public ResponseEntity<String> markTaskComplete(
 			@NotNull @ApiParam(value = "Pass a task name for update", required = true) @Valid @RequestParam(value = "taskName", required = true) String taskName) {
 
@@ -392,15 +407,14 @@ public class ToDoApiController implements ToDoApi {
 
 		// Print
 		System.out.println("Valid user");
-		
-		
+
 		// Validate required parameters
 		if (taskName == null) {
 			return new ResponseEntity<String>("Error - taskName parameter is required.", HttpStatus.BAD_REQUEST);
 		}
 
 		// TODO create utility to extract token from header
-		//String token = authorization.substring(7);
+		// String token = authorization.substring(7);
 
 		// Create task
 		String result = userService.toggleCompleted(token, taskName);
@@ -408,9 +422,9 @@ public class ToDoApiController implements ToDoApi {
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
-
 	/*
-	 public ResponseEntity<Movie> suggestMovie(@RequestHeader("Authorization") String authorization) {
+	 * public ResponseEntity<Movie> suggestMovie(@RequestHeader("Authorization")
+	 * String authorization) {
 	 */
 	public ResponseEntity<Movie> suggestMovie() {
 

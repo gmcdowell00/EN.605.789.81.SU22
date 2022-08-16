@@ -33,12 +33,12 @@ public interface IUserService {
 	String createTask(String token, Task task);
 
 	String deleteTask(String token, String taskName);
-	
+
 	String updateTask(String token, Task task);
-	
+
 	String toggleCompleted(String token, String taskName);
-	
+
 	Movie suggestMovie(String token);
-	
+
 	UserAccount Save(UserAccount user);
 }

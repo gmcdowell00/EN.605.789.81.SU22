@@ -17,7 +17,7 @@ import javax.validation.constraints.*;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-07-31T18:12:46.646471100-04:00[America/New_York]")
 public class Task {
-	
+
 	@Size(min = 3, max = 100)
 	@JsonProperty("name")
 	private String name = null;
@@ -48,7 +48,6 @@ public class Task {
 	 **/
 	@ApiModelProperty(example = "Task", value = "")
 
-	
 	public String getName() {
 		return name;
 	}
