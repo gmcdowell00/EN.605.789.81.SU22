@@ -50,12 +50,17 @@ public class UserService implements IUserService {
 	}
 
 	public List<Task> findUserTaskByToken(String token) {
-		UserAccount user = this.userRepo.findByUserId(token);
-		return user != null ? user.getTasks() : new ArrayList<Task>();
+		Optional<UserAccount> user = this.userRepo.findByToken(token);
+		return user.isPresent() ? user.get().getTasks() : new ArrayList<Task>();
 	}
 
 	public void insertUser(UserAccount user) {
 		this.userRepo.insert(user);
+	}
+	
+	@Override
+	public UserAccount Save(UserAccount user) {
+		return this.userRepo.save(user);
 	}
 
 	@Override
@@ -227,7 +232,7 @@ public class UserService implements IUserService {
 			String startDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
 			// TODO use user zip code instead
-			String zipCode = "75007"; // user.getZipCode();
+			String zipCode = user.getZipCode();
 
 			targetURL += "&zip=" + zipCode + "&startDate=" + startDate;
 

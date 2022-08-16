@@ -30,13 +30,15 @@ public interface IUserService {
 
 	String Login(String username, String password);
 
-	public String createTask(String token, Task task);
+	String createTask(String token, Task task);
 
-	public String deleteTask(String token, String taskName);
+	String deleteTask(String token, String taskName);
 	
-	public String updateTask(String token, Task task);
+	String updateTask(String token, Task task);
 	
-	public String toggleCompleted(String token, String taskName);
+	String toggleCompleted(String token, String taskName);
 	
-	public Movie suggestMovie(String token);
+	Movie suggestMovie(String token);
+	
+	UserAccount Save(UserAccount user);
 }

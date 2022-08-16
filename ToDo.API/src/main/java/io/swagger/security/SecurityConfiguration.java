@@ -31,11 +31,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private static final RequestMatcher PROTECTED_URLS = new OrRequestMatcher(
             //new AntPathRequestMatcher("/api/**"),
-            new AntPathRequestMatcher("/api/v1/createTask"),
-            new AntPathRequestMatcher("/api/v1/getTasks"),
-            new AntPathRequestMatcher("/api/v1/updateTask"),
-            new AntPathRequestMatcher("/api/v1/deleteTask"),
-            new AntPathRequestMatcher("/api/v1/suggestion")
+            new AntPathRequestMatcher("/api/v1/createTask/"),
+            new AntPathRequestMatcher("/api/v1/getTasks/"),
+            new AntPathRequestMatcher("/api/v1/updateTask/"),
+            new AntPathRequestMatcher("/api/v1/deleteTask/"),
+            new AntPathRequestMatcher("/api/v1/suggestion/")
             
     );
 

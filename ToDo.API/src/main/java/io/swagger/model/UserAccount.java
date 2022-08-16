@@ -30,26 +30,43 @@ public class UserAccount   {
   private ObjectId _id;
 
   @Field
+  @NotBlank(message="Can't be empty")
+  @NotEmpty(message="Can't be empty")
+  @NotNull(message="Can't be null")
   @JsonProperty("userId")
   private String userId = null;
 
   @Field
+  @NotBlank(message="Can't be empty")
+  @NotEmpty(message="Can't be empty")
+  @NotNull(message="Can't be null")
   @JsonProperty("password")
   private String password = null;
 
   @Field
+  @NotBlank(message="Can't be empty")
+  @NotEmpty(message="Can't be empty")
+  @NotNull(message="Can't be null")
   @JsonProperty("firstName")
   private String firstName = null;
 
   @Field
+  @NotEmpty(message="Can't be empty")
+  @NotNull(message="Can't be null")
   @JsonProperty("lastName")
   private String lastName = null;
 
   @Field
+  @NotBlank(message="Can't be empty")
+  @NotEmpty(message="Can't be empty")
+  @NotNull(message="Can't be null")
   @JsonProperty("email")
   private String email = null;
 
   @Field
+  @NotBlank(message="Can't be empty")
+  @NotEmpty(message="Can't be empty")
+  @NotNull(message="Can't be null")
   @JsonProperty("dateOfBirth")
   private LocalDate dateOfBirth = null;
 
@@ -61,12 +78,44 @@ public class UserAccount   {
   @JsonProperty("tasks")
   @Valid
   private List<Task> tasks = null;
+  
+  @Field
+  @NotBlank(message="Can't be empty")
+  @NotEmpty(message="Can't be empty")
+  @NotNull(message="Can't be null")
+  @JsonProperty("street")
+  @Valid
+  public String street = null;
+  
+  @Field
+  @NotBlank(message="Can't be empty")
+  @NotEmpty(message="Can't be empty")
+  @NotNull(message="Can't be null")
+  @JsonProperty("city")
+  @Valid
+  public String city = null;
+  
+  @Field
+  @NotBlank(message="Can't be empty")
+  @NotEmpty(message="Can't be empty")
+  @NotNull(message="Can't be null")
+  @JsonProperty("state")
+  @Valid
+  public String state = null;
+  
+  @Field
+  @NotBlank(message="Can't be empty")
+  @NotEmpty(message="Can't be empty")
+  @NotNull(message="Can't be null")
+  @JsonProperty("zipCode")
+  @Valid
+  public String zipCode = null;
 
   public UserAccount userId(String userId) {
     this.userId = userId;
     return this;
   }
-
+  
   /**
    * Get userId
    * @return userId
@@ -233,9 +282,40 @@ public class UserAccount   {
   public void setTasks(List<Task> tasks) {
     this.tasks = tasks;
   }
+  
+  public String getStreet() {
+	return street;
+}
 
+public void setStreet(String street) {
+	this.street = street;
+}
 
-  @Override
+public String getCity() {
+	return city;
+}
+
+public void setCity(String city) {
+	this.city = city;
+}
+
+public String getState() {
+	return state;
+}
+
+public void setState(String state) {
+	this.state = state;
+}
+
+public String getZipCode() {
+	return zipCode;
+}
+
+public void setZipCode(String zipCode) {
+	this.zipCode = zipCode;
+}
+
+@Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
