@@ -36,13 +36,14 @@
 				<version>3.0.4</version>
 
 				<configuration>
+					<appName>todoapi</appName>
 					<jdkVersion>${java.target.version}</jdkVersion>
 					<includeTarget>false</includeTarget>
 					<includes>
 						<include>target/${project.build.finalName}.jar</include>
 					</includes>
 					<processTypes>
-						<web>java $JAVA_OPTS -jar target/${project.build.finalName}.jar
+						<web>java $JAVA_OPTS -Dserver.port=$PORT -jar target/${project.build.finalName}.jar
 							--server.port=$PORT $JAR_OPTS
 						</web>
 					</processTypes>

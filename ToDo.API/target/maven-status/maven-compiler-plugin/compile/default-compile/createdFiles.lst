@@ -7,8 +7,10 @@ io\swagger\api\ApiResponseMessage.class
 io\swagger\configuration\CustomInstantDeserializer$3.class
 io\swagger\model\Token.class
 io\swagger\security\AuthenticationFilter.class
+META-INF\maven\io.swagger\swagger-spring-todo\pom.properties
 io\swagger\configuration\CustomInstantDeserializer$11.class
 io\swagger\configuration\CustomInstantDeserializer$6.class
+META-INF\MANIFEST.MF
 io\swagger\Swagger2SpringBoot$ExitException.class
 io\swagger\dao\UserRepo.class
 io\swagger\service\UserService.class
@@ -32,6 +34,7 @@ io\swagger\model\moviesapi\PreferredImage.class
 io\swagger\api\ToDoApi.class
 io\swagger\service\IUserService.class
 io\swagger\model\moviesapi\Theatre.class
+META-INF\maven\io.swagger\swagger-spring-todo\pom.xml
 io\swagger\model\UserAccount.class
 io\swagger\configuration\CustomInstantDeserializer.class
 io\swagger\util\HelperUtil.class
