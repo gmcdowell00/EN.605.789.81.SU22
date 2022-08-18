@@ -201,7 +201,6 @@ public class ToDoApiController implements ToDoApi {
 					.body(this.helperUtil.ErrorBuilder(bindingResult.getAllErrors()));
 		}
 
-		// TODO create utility to extract token from header
 		// authorization.substring(7);
 		// Print
 		System.out.println("Verify user");
@@ -253,7 +252,8 @@ public class ToDoApiController implements ToDoApi {
 		String result = userService.createTask(token, task);
 
 		// Task created return create
-		return new ResponseEntity<String>(result, HttpStatus.CREATED);
+		return result.contains("Error") ? new ResponseEntity<String>(result, HttpStatus.BAD_REQUEST)
+				: new ResponseEntity<String>(result, HttpStatus.CREATED);
 	}
 
 	/**
@@ -392,7 +392,7 @@ public class ToDoApiController implements ToDoApi {
 		// Update task
 		String result = userService.updateTask(token, task);
 
-		return new ResponseEntity<String>(result, HttpStatus.CREATED);
+		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
 	/*
