@@ -79,7 +79,7 @@ public class ToDoApiController implements ToDoApi {
 
 		// Print
 		System.out.println("Request to create User");
-		
+
 		// Print
 		System.out.println("Checking for duplicate user");
 
@@ -96,8 +96,8 @@ public class ToDoApiController implements ToDoApi {
 
 		// Print
 		System.out.println("User doesn't exist. Validating user account");
-		
-		// Validate 
+
+		// Validate
 		String errorMsg = this.helperUtil.validateUserAccount(body);
 		if (errorMsg != null) {
 
@@ -105,7 +105,7 @@ public class ToDoApiController implements ToDoApi {
 			System.out.println("invalid user parameter");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMsg);
 		}
-		
+
 		// Print
 		System.out.println("Valid user. Creating account");
 
@@ -113,7 +113,7 @@ public class ToDoApiController implements ToDoApi {
 		// Instantiate token object and Task list
 		body.setToken(this.userService.CreateToken());
 		body.setTasks(new ArrayList<Task>());
-		
+
 		// Find inserted student and retrieve entity
 		UserAccount user = this.userService.Save(body);
 
@@ -387,6 +387,11 @@ public class ToDoApiController implements ToDoApi {
 		if (task.getDescription() != null && task.getDescription().length() > 2000) {
 			return new ResponseEntity<String>("Error - Description cannot be more than 2000 characters.",
 					HttpStatus.BAD_REQUEST);
+		}
+
+		// Check "isCompleted" parameter - if null then default to false
+		if (task.getIsCompleted() == null) {
+			task.setIsCompleted(false);
 		}
 
 		// Update task
