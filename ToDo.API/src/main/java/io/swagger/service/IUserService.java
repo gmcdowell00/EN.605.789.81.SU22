@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import io.swagger.model.Movie;
 import io.swagger.model.Task;
+import io.swagger.model.Token;
 import io.swagger.model.UserAccount;
 
 /**
@@ -41,4 +42,6 @@ public interface IUserService {
 	Movie suggestMovie(String token);
 
 	UserAccount Save(UserAccount user);
+	
+	Token CreateToken();
 }

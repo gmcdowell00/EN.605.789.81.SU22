@@ -2,6 +2,7 @@ package io.swagger.api;
 
 import io.swagger.model.Movie;
 import io.swagger.model.Task;
+import io.swagger.model.Token;
 import io.swagger.model.UserAccount;
 import io.swagger.security.SecurityUtil;
 import io.swagger.service.UserService;
@@ -25,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -76,16 +79,7 @@ public class ToDoApiController implements ToDoApi {
 
 		// Print
 		System.out.println("Request to create User");
-
-		// UserAccount parameter has errors
-		if (bindingResult.hasErrors()) {
-
-			// Write to console and return error message
-			System.out.println("invalid UserAccount parameter");
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body(this.helperUtil.ErrorBuilder(bindingResult.getAllErrors()));
-		}
-
+		
 		// Print
 		System.out.println("Checking for duplicate user");
 
@@ -101,8 +95,25 @@ public class ToDoApiController implements ToDoApi {
 		}
 
 		// Print
-		System.out.println("User doesn't exist. Creating new account");
+		System.out.println("User doesn't exist. Validating user account");
+		
+		// Validate 
+		String errorMsg = this.helperUtil.validateUserAccount(body);
+		if (errorMsg != null) {
 
+			// Write to console and return error message
+			System.out.println("invalid user parameter");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMsg);
+		}
+		
+		// Print
+		System.out.println("Valid user. Creating account");
+
+		// Passed validation
+		// Instantiate token object and Task list
+		body.setToken(this.userService.CreateToken());
+		body.setTasks(new ArrayList<Task>());
+		
 		// Find inserted student and retrieve entity
 		UserAccount user = this.userService.Save(body);
 
@@ -138,7 +149,7 @@ public class ToDoApiController implements ToDoApi {
 
 			// Instantiate string builder
 			StringBuilder sb = new StringBuilder();
-			sb.append("Error:" + System.lineSeparator());
+			sb.append("Error-");
 
 			// If userId null append it
 			if (userId == null || userId == "")

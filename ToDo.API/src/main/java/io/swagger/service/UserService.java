@@ -96,24 +96,24 @@ public class UserService implements IUserService {
 			UserAccount user = userAccount.get();
 
 			if (user.getToken() != null) {
-				String tokens = user.getToken().getToken();
-				if (user.getToken().getToken() != null && !user.getToken().getToken().isBlank()
-						&& !user.getToken().getToken().isEmpty())
-					return user.getToken().getToken();
-
-				Token token = new Token();
-				LocalDate date = LocalDate.now();
-				token.setToken(UUID.randomUUID().toString());
-				token.setRefreshToken(UUID.randomUUID().toString());
-				token.setIssueDate(date);
-				token.setExpirationDate(date.plusMonths(1));
-
-				user.setToken(token);
-				this.userRepo.save(user);
-				return token.getToken();
+				String token = user.getToken().getToken();
+				if (token != null || token.equals(""))
+					return token;
 			}
 		}
 		return StringUtils.EMPTY;
+	}
+	
+	@Override
+	public Token CreateToken() {
+		
+		Token token = new Token();
+		LocalDate date = LocalDate.now();
+		token.setToken(UUID.randomUUID().toString());
+		token.setRefreshToken(UUID.randomUUID().toString());
+		token.setIssueDate(date);
+		token.setExpirationDate(date.plusMonths(1));
+		return token;
 	}
 
 	@Override
@@ -284,4 +284,5 @@ public class UserService implements IUserService {
 
 		return new Movie();
 	}
+
 }
